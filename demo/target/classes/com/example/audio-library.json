@@ -1,0 +1,135 @@
+[
+  {
+    "name": "Teach Me How to Dougie",
+    "artist": "Cali Swag District",
+    "year": 2010,
+    "genre": "Hip-Hop",
+    "fileName": "demo/src/main/java/com/example/Sounds/dougie-crop.wav"
+  },
+  {
+    "name": "Could've Been (Tik Tok Remix)",
+    "artist": "H.E.R.",
+    "year": 2018,
+    "genre": "R&B",
+    "fileName": "demo/src/main/java/com/example/Sounds/her-crop.wav"
+  },
+  {
+    "name": "On Me",
+    "artist": "Lil Baby",
+    "year": 2020,
+    "genre": "Hip-Hop",
+    "fileName": "demo/src/main/java/com/example/Sounds/lil-baby-crop.wav"
+  },
+  {
+    "name": "Industry Baby",
+    "artist": "Lil Nas X",
+    "year": 2021,
+    "genre": "Hip-Hop",
+    "fileName": "demo/src/main/java/com/example/Sounds/lil-nas-x-crop.wav"
+  },
+  {
+    "name": "Who, What, When???",
+    "artist": "Squire Tuck",
+    "year": 2017,
+    "genre": "Indy Rock",
+    "fileName": "demo/src/main/java/com/example/Sounds/Squire Tuck - Who, What, When___.wav"
+  },
+  {
+    "name": "Old Fashioned Lullaby",
+    "artist": "Squire Tuck",
+    "year": 2015,
+    "genre": "Instrumental",
+    "fileName": "demo/src/main/java/com/example/Sounds/Squire Tuck - Squire Tuck - Old Fashioned Lullaby.wav"
+  },
+  {
+    "name": "Zion",
+    "artist": "SalmonLikeTheFish",
+    "year": 2018,
+    "genre": "Instrumental",
+    "fileName": "demo/src/main/java/com/example/Sounds/SalmonLikeTheFish - Zion.wav"
+  },
+  {
+    "name": "Sell All Your Sorrows",
+    "artist": "Maestro One",
+    "year": 2015,
+    "genre": "Instrumental",
+    "fileName": "demo/src/main/java/com/example/Sounds/Maestro One - Sell All Your Sorrows.wav"
+  },
+  {
+    "name": "Hey Mercy",
+    "artist": "Pierce Murphy",
+    "year": 2018,
+    "genre": "Soul-RnB",
+    "fileName": "demo/src/main/java/com/example/Sounds/Pierce Murphy - Hey Mercy.wav"
+  },
+  {
+    "name": "The Things We Never Said",
+    "artist": "Maestro One",
+    "year": 2018,
+    "genre": "Instrumental",
+    "fileName": "demo/src/main/java/com/example/Sounds/Maestro One - The Things We Never Said.wav"
+  },
+  {
+    "name": "Seize the Day Blues",
+    "artist": "Lopkerjo",
+    "year": 2025,
+    "genre": "Folk",
+    "fileName": "demo/src/main/java/com/example/Sounds/Lopkerjo - Seize the Day Blues.wav"
+  },
+  {
+    "name": "Soul of Orleans",
+    "artist": "Lopkerjo",
+    "year": 2025,
+    "genre": "R&B",
+    "fileName": "demo/src/main/java/com/example/Sounds/Lopkerjo - Soul of Orleans.wav"
+  },
+  {
+    "name": "Together (ft. Mike Vergasin)",
+    "artist": "Stella Jacobs",
+    "year": 2025,
+    "genre": "Trap",
+    "fileName": "demo/src/main/java/com/example/Sounds/Stella Jacobs - Stella Jacobs - Together (ft. Mike Vergasin).mp3.wav"
+  },
+  {
+    "name": "Artificial Intelligence Monsters",
+    "artist": "NoKings XXX",
+    "year": 2026,
+    "genre": "Meditative",
+    "fileName": "demo/src/main/java/com/example/Sounds/NoKings XXX - Artificial Intelligence Monsters.wav"
+  },
+  {
+    "name": "Nanjing 37 _ Rape of Nanking China 1937 Massacre",
+    "artist": "Lopkerjo",
+    "year": 2023,
+    "genre": "Electronic",
+    "fileName": "demo/src/main/java/com/example/Sounds/Lopkerjo - Nanjing 37 _ Rape of Nanking China 1937 Massacre.wav"
+  },
+  {
+    "name": " Celebrate",
+    "artist": "Derek Clegg",
+    "year": 2020,
+    "genre": "instrumental",
+    "fileName": "demo/src/main/java/com/example/Sounds/Derek Clegg - Celebrate.wav"
+  },
+  {
+    "name": "Gimme All I Want",
+    "artist": "Anthem of Rain",
+    "year": 2020,
+    "genre": "instrumental",
+    "fileName": "demo/src/main/java/com/example/Sounds/Anthem of Rain - Gimme All I Want.wav"
+  },
+  {
+    "name": "#cool",
+    "artist": "Vincent Augustus",
+    "year": 2018,
+    "genre": "Pop",
+    "fileName": "demo/src/main/java/com/example/Sounds/Vincent Augustus - #cool.wav"
+  },
+  {
+    "name": "outline",
+    "artist": "Vincent Augustus",
+    "year": 2018,
+    "genre": "Pop",
+    "fileName": "demo/src/main/java/com/example/Sounds/Vincent Augustus - outline.wav"
+  }
+]
