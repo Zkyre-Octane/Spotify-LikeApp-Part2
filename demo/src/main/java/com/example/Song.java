@@ -7,27 +7,9 @@ public class Song {
     private String fileName;
     private int year;
     private String genre;
+    private boolean isFavorite;
 
-    // Serializes attributes into a string
-    public String toString() {
-        String s;
-
-        s = "{ ";
-        s += "name: " + name;
-        s += ", ";
-        s += "artist: " + artist;
-        s += ", ";
-        s += "fileName: " + fileName;
-        s += ", ";
-        s += "year: " + year;
-        s += ", ";
-        s += "genre: " + genre;
-        s += " }";
-
-        return s;
-    }
-
-    // Getters
+    //Getters
     public String name() {
         return this.name;
     }
@@ -48,4 +30,12 @@ public class Song {
         return this.genre;
     }
 
+    public boolean isFavorite() {
+        return this.isFavorite;
+    }
+
+    //Favorite
+    public void setFavorite(boolean favorite) {
+        this.isFavorite = favorite;
+    }
 }
