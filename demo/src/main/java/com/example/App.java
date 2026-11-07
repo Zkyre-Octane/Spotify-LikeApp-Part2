@@ -118,21 +118,15 @@ public class App {
     }
     
     public static void main(String[] args) {
-        int songNumber; // user input for song number used by home and library
-
         try {
-
+            FileReader reader = new FileReader(JSON_FILE);
             Gson gson = new Gson();
-
-            Type songListType = new TypeToken<List<Song>>() {
-            }.getType();
-
+            Type songListType = new TypeToken<List<Song>>() {}.getType();
             List<Song> songs = gson.fromJson(reader, songListType);
-
             reader.close();
 
             Scanner scanner = new Scanner(System.in);
-            String choice;
+            String choice = "";
 
             // Main menu
             do {
@@ -150,19 +144,7 @@ public class App {
 
                     case "H": // HOME
                         System.out.println("\n=== Home ===");
-
-                        for (int i = 0; i < songs.size(); i++) {
-                            System.out.println((i + 1) + ". " + songs.get(i).name()); // songs listed by number
-                        }
-                        System.out.print("Enter song number to play: ");
-
-                        songNumber = Integer.parseInt(scanner.nextLine());
-
-                        if (songNumber >= 1 && songNumber <= songs.size()) {
-                            play(songs.get(songNumber - 1));
-                        } else {
-                            System.out.println("Invalid song number.");
-                        }
+                        showSongs(songs, songs, scanner);
                         break;
 
                     case "S": // SEARCH
@@ -172,19 +154,17 @@ public class App {
                         boolean found = false;
 
                         for (Song song : songs) {
-                            if (song.name().toLowerCase().contains(searchTitle.toLowerCase())) { // using contains so
-                                                                                                 // the user can search
-                                                                                                 // a part of a title
+                            if (song.name().toLowerCase().contains(searchTitle.toLowerCase())) { 
                                 System.out.println("\nTitle: " + song.name());
                                 System.out.println("Artist: " + song.artist());
                                 System.out.println("Year: " + song.year());
                                 System.out.println("Genre: " + song.genre());
 
-                                System.out.print("\nPlay this song? (Y/N): "); // ask if user wants to play the song
+                                System.out.print("\nPlay this song? (Y/N): "); 
                                 String playChoice = scanner.nextLine().trim();
 
                                 if (playChoice.equalsIgnoreCase("Y")) {
-                                    play(song);
+                                    play(song, songs, scanner);
                                 }
 
                                 found = true;
@@ -199,31 +179,10 @@ public class App {
 
                     case "L": // LIBRARY
                         System.out.println("\n=== Your Library ===");
-
-                        for (int i = 0; i < songs.size(); i++) {
-                            System.out.println((i + 1) + "." + songs.get(i).name());
-                        }
-
-                        System.out.print("Enter song number to play: ");
-
-                        songNumber = Integer.parseInt(scanner.nextLine());
-
-                        if (songNumber >= 1 && songNumber <= songs.size()) {
-                            play(songs.get(songNumber - 1));
-                        } else {
-                            System.out.println("Invalid song number.");
-                        }
                         break;          
                     
                     case "F":
                         System.out.println("\n=== Your Favorites ===");
-                        List<Song> favorites = new java.util.ArrayList<Song>();
-                        for (Song song : songs) {
-                            if (song.isFavorite()) {
-                                favorites.add(song);
-                            }
-                        }
-                        showSongs(favorites, songs, scanner);
                         break;
 
                     case "Q": // QUIT
