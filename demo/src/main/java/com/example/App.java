@@ -60,6 +60,10 @@ public class App {
                             paused = true;
                         }
                         break;
+                    case "R":
+                        break;
+                    case "F":
+                        break;
                     case "S":
                         audioClip.stop();
                         audioClip.setMicrosecondPosition(0);
@@ -72,7 +76,47 @@ public class App {
 
                     default:
                         System.out.println("Invalid control.");
+                }
+            }
 
+            audioClip.close();
+            audioClip = null;
+            if (stopped) {
+                System.out.println("Song stopped.");
+            } else {
+                System.out.println("Song finished.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Could not play: " + song.name());
+            e.printStackTrace();
+        }
+    }
+
+    //Display all songs 
+    public static void showSongs(List<Song> displayedSongs, List<Song> allSongs, Scanner scanner) {
+        if (displayedSongs.isEmpty()) {
+            System.out.println("No songs to display.");
+            return;
+        }
+
+        for (int i = 0; i < displayedSongs.size(); i++) {
+            System.out.println((i + 1) + ". " + displayedSongs.get(i).name());
+        }
+
+        System.out.print("Enter song number to play (0 to go back): ");
+        try {
+            int songNumber = Integer.parseInt(scanner.nextLine());
+            if (songNumber >= 1 && songNumber <= displayedSongs.size()) {
+                play(displayedSongs.get(songNumber - 1), allSongs, scanner);
+            } else if (songNumber != 0) {
+                System.out.println("Invalid song number.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a number.");
+        }
+    }
+    
     public static void main(String[] args) {
         int songNumber; // user input for song number used by home and library
 
