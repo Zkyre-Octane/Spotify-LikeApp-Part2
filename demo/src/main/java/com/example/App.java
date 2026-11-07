@@ -60,14 +60,24 @@ public class App {
                             paused = true;
                         }
                         break;
-                    case "R":
-                        break;
-                    case "F":
-                        break;
                     case "S":
                         audioClip.stop();
                         audioClip.setMicrosecondPosition(0);
                         stopped = true;
+                        break;
+                    case "R":
+                        long rewindPosition = audioClip.getMicrosecondPosition() - 5000000;
+                        if (rewindPosition < 0) {
+                            rewindPosition = 0;
+                        }
+                        audioClip.setMicrosecondPosition(rewindPosition);
+                        break;
+                    case "F":
+                        long forwardPosition = audioClip.getMicrosecondPosition() + 5000000;
+                        if (forwardPosition > audioClip.getMicrosecondLength()) {
+                            forwardPosition = audioClip.getMicrosecondLength();
+                        }
+                        audioClip.setMicrosecondPosition(forwardPosition);
                         break;
                     case "V":
                         song.setFavorite(!song.isFavorite());
