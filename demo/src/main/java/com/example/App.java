@@ -60,6 +60,18 @@ public class App {
                             paused = true;
                         }
                         break;
+                    case "S":
+                        audioClip.stop();
+                        audioClip.setMicrosecondPosition(0);
+                        stopped = true;
+                        break;
+                    case "V":
+                        song.setFavorite(!song.isFavorite());
+                        System.out.println("Favorite: " + song.isFavorite());
+                        break;
+
+                    default:
+                        System.out.println("Invalid control.");
 
     public static void main(String[] args) {
         int songNumber; // user input for song number used by home and library
