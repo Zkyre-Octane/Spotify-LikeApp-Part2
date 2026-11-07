@@ -3,6 +3,7 @@ package com.example;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
@@ -10,13 +11,26 @@ import java.util.List;
 import java.util.Scanner;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import java.io.File;
 
 public class App {
+
     private static Clip audioClip;
     private static final String JSON_FILE = "demo/src/main/java/com/example/audio-library.json";
 
-    // Play a song and show the playback controls
+    //songs list
+    public static void saveSongs(List<Song> songs) {
+        try {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            FileWriter writer = new FileWriter(JSON_FILE);
+            gson.toJson(songs, writer);
+            writer.close();
+            System.out.println("Library saved.");
+        } catch (Exception e) {
+            System.out.println("Could not save the library.");
+        }
+    }
+
+    //Play a song and show controls
     public static void play(Song song, List<Song> songs, Scanner scanner) {
         try {
             if (audioClip != null && audioClip.isOpen()) {
@@ -40,10 +54,14 @@ public class App {
             audioClip.start();
 
             System.out.println("\nNow playing: " + song.name());
+            System.out.println("Artist: " + song.artist());
+            System.out.println("Year: " + song.year());
+            System.out.println("Genre: " + song.genre());
+            System.out.println("Is Favorite: " + song.isFavorite());
+            System.out.println("File: " + song.fileName());
 
             boolean paused = false;
             boolean stopped = false;
-            
 
             while ((audioClip.isRunning() || paused) && !stopped) {
                 System.out.println("\n[P]ause/Resume  [S]top  [R]ewind 5 seconds  [F]orward 5 seconds  [V]avorite");
@@ -60,11 +78,13 @@ public class App {
                             paused = true;
                         }
                         break;
+
                     case "S":
                         audioClip.stop();
                         audioClip.setMicrosecondPosition(0);
                         stopped = true;
                         break;
+
                     case "R":
                         long rewindPosition = audioClip.getMicrosecondPosition() - 5000000;
                         if (rewindPosition < 0) {
@@ -72,6 +92,7 @@ public class App {
                         }
                         audioClip.setMicrosecondPosition(rewindPosition);
                         break;
+
                     case "F":
                         long forwardPosition = audioClip.getMicrosecondPosition() + 5000000;
                         if (forwardPosition > audioClip.getMicrosecondLength()) {
@@ -79,9 +100,11 @@ public class App {
                         }
                         audioClip.setMicrosecondPosition(forwardPosition);
                         break;
+
                     case "V":
                         song.setFavorite(!song.isFavorite());
                         System.out.println("Favorite: " + song.isFavorite());
+                        saveSongs(songs);
                         break;
 
                     default:
@@ -103,7 +126,7 @@ public class App {
         }
     }
 
-    //Display all songs 
+    //Display all songs and allow to select one
     public static void showSongs(List<Song> displayedSongs, List<Song> allSongs, Scanner scanner) {
         if (displayedSongs.isEmpty()) {
             System.out.println("No songs to display.");
@@ -126,7 +149,7 @@ public class App {
             System.out.println("Please enter a number.");
         }
     }
-    
+
     public static void main(String[] args) {
         try {
             FileReader reader = new FileReader(JSON_FILE);
@@ -138,71 +161,70 @@ public class App {
             Scanner scanner = new Scanner(System.in);
             String choice = "";
 
-            // Main menu
             do {
                 System.out.println("\n=== Spotify-like Player ===");
                 System.out.println("[H] Home");
-                System.out.println("[S] Search");
+                System.out.println("[S] Search by title");
                 System.out.println("[L] Library");
                 System.out.println("[F] Favorites");
                 System.out.println("[Q] Quit");
                 System.out.print("Choose an option: ");
-
                 choice = scanner.nextLine().trim();
 
                 switch (choice.toUpperCase()) {
-
-                    case "H": // HOME
+                    case "H":
                         System.out.println("\n=== Home ===");
                         showSongs(songs, songs, scanner);
                         break;
 
-                    case "S": // SEARCH
+                    case "S":
                         System.out.print("\nEnter song title to search: ");
                         String searchTitle = scanner.nextLine().trim();
-
                         boolean found = false;
 
                         for (Song song : songs) {
-                            if (song.name().toLowerCase().contains(searchTitle.toLowerCase())) { 
+                            if (song.name().toLowerCase().contains(searchTitle.toLowerCase())) {
                                 System.out.println("\nTitle: " + song.name());
                                 System.out.println("Artist: " + song.artist());
                                 System.out.println("Year: " + song.year());
                                 System.out.println("Genre: " + song.genre());
-
-                                System.out.print("\nPlay this song? (Y/N): "); 
+                                System.out.println("Is Favorite: " + song.isFavorite());
+                                System.out.print("Play this song? (Y/N): ");
                                 String playChoice = scanner.nextLine().trim();
-
                                 if (playChoice.equalsIgnoreCase("Y")) {
                                     play(song, songs, scanner);
                                 }
-
                                 found = true;
                             }
                         }
 
                         if (!found) {
-                            System.out.println("No songs found."); // if no songs found, print this message
+                            System.out.println("No songs found.");
                         }
-
                         break;
 
-                    case "L": // LIBRARY
+                    case "L":
                         System.out.println("\n=== Your Library ===");
-                        break;          
-                    
+                        showSongs(songs, songs, scanner);
+                        break;
+
                     case "F":
                         System.out.println("\n=== Your Favorites ===");
+                        List<Song> favorites = new java.util.ArrayList<Song>();
+                        for (Song song : songs) {
+                            if (song.isFavorite()) {
+                                favorites.add(song);
+                            }
+                        }
+                        showSongs(favorites, songs, scanner);
                         break;
 
-                    case "Q": // QUIT
+                    case "Q":
                         System.out.println("Goodbye!");
                         break;
 
-                    default: // INVALID INPUT
-                        System.out.println(
-                                "Invalid option. Please choose H, S, L, or Q.");
-
+                    default:
+                        System.out.println("Invalid option. Please choose H, S, L, F, or Q.");
                 }
 
             } while (!choice.equalsIgnoreCase("Q"));
