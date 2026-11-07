@@ -1,8 +1,10 @@
 package com.example;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Scanner;
@@ -11,34 +13,58 @@ import javax.sound.sampled.Clip;
 import java.io.File;
 
 public class App {
-    public static void play(Song song) {
+    private static Clip audioClip;
+    private static final String JSON_FILE = "demo/src/main/java/com/example/audio-library.json";
 
+    // Play a song and show the playback controls
+    public static void play(Song song, List<Song> songs, Scanner scanner) {
         try {
-            File audioFile = new File(song.fileName()); // locate audio file
+            if (audioClip != null && audioClip.isOpen()) {
+                audioClip.stop();
+                audioClip.close();
+            }
 
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(audioFile));
+            if (song.fileName() == null || song.fileName().isEmpty()) {
+                System.out.println("Audio file path is missing for: " + song.name());
+                return;
+            }
+
+            File audioFile = new File(song.fileName());
+            if (!audioFile.exists()) {
+                System.out.println("Audio file not found: " + audioFile.getPath());
+                return;
+            }
+
+            audioClip = AudioSystem.getClip();
+            audioClip.open(AudioSystem.getAudioInputStream(audioFile));
+            audioClip.start();
 
             System.out.println("\nNow playing: " + song.name());
-            System.out.println("Artist: " + song.artist());
-            System.out.println("Year: " + song.year());
-            System.out.println("Genre: " + song.genre());
-            System.out.println("Filepath: " + song.fileName());
 
-            clip.start(); // begins playback
+            boolean paused = false;
+            boolean stopped = false;
+            
 
-        } catch (Exception e) {
-            System.out.println("Could not play: " + song.name());
-            e.printStackTrace();
-        }
+            while ((audioClip.isRunning() || paused) && !stopped) {
+                System.out.println("\n[P]ause/Resume  [S]top  [R]ewind 5 seconds  [F]orward 5 seconds  [V]avorite");
+                System.out.print("Choose a control: ");
+                String control = scanner.nextLine().trim();
 
-    }
+                switch (control.toUpperCase()) {
+                    case "P":
+                        if (paused) {
+                            audioClip.start();
+                            paused = false;
+                        } else {
+                            audioClip.stop();
+                            paused = true;
+                        }
+                        break;
 
     public static void main(String[] args) {
         int songNumber; // user input for song number used by home and library
 
         try {
-            FileReader reader = new FileReader("demo\\src\\main\\java\\com\\example\\audio-library.json");
 
             Gson gson = new Gson();
 
@@ -58,6 +84,7 @@ public class App {
                 System.out.println("[H] Home");
                 System.out.println("[S] Search");
                 System.out.println("[L] Library");
+                System.out.println("[F] Favorites");
                 System.out.println("[Q] Quit");
                 System.out.print("Choose an option: ");
 
@@ -101,7 +128,7 @@ public class App {
                                 String playChoice = scanner.nextLine().trim();
 
                                 if (playChoice.equalsIgnoreCase("Y")) {
-                                    play(song); // play the song if the user chooses yes
+                                    play(song);
                                 }
 
                                 found = true;
@@ -130,6 +157,17 @@ public class App {
                         } else {
                             System.out.println("Invalid song number.");
                         }
+                        break;          
+                    
+                    case "F":
+                        System.out.println("\n=== Your Favorites ===");
+                        List<Song> favorites = new java.util.ArrayList<Song>();
+                        for (Song song : songs) {
+                            if (song.isFavorite()) {
+                                favorites.add(song);
+                            }
+                        }
+                        showSongs(favorites, songs, scanner);
                         break;
 
                     case "Q": // QUIT
